@@ -1,31 +1,62 @@
-const express = require('express');
-const http = require('http');
-const socketIo = require('socket.io');
+const express = require("express");
+const http = require("http");
+const socketIo = require("socket.io");
 
-// Create an Express app
 const app = express();
 const server = http.createServer(app);
 const io = socketIo(server);
 
-// Serve static files (CSS, JS) from the "public" folder
-app.use(express.static('public'));
+const PORT = process.env.PORT || 3000;
 
-// Handle incoming connections
-io.on('connection', (socket) => {
-  const ipAddress = socket.handshake.address; // Get the IP address of the client
-  console.log(`A user connected from IP: ${ipAddress}`); // Log IP in console
+// Admin credentials
+const ADMIN_USERNAME = "Chatnordadmin";
+const ADMIN_PASSWORD = "Chatnord123@!";
+const OWNER_USERNAME = "Ownerchat";
+const OWNER_PASSWORD = "Ownerofsite123";
 
-  // Broadcast message when a user sends a new chat message
-  socket.on('chat message', (msg) => {
-    io.emit('chat message', msg);
+// Store current content for updates
+let newText = "This is the New section.";
+let roadmapText = "This is the Roadmap section.";
+let aboutUsText = "This is the About Us page.";
+
+app.use(express.static("public"));
+
+io.on("connection", (socket) => {
+  console.log("A user connected");
+
+  socket.on("chat message", (msg, username) => {
+    if (username === OWNER_USERNAME) {
+      msg = `[owner] ${msg}`; // Prefix messages from owner
+    }
+    io.emit("chat message", msg, username);
   });
 
-  socket.on('disconnect', () => {
-    console.log(`A user disconnected from IP: ${ipAddress}`);
+  socket.on("new update", (newUpdate) => {
+    newText = newUpdate;
+    io.emit("new update", newUpdate);
+  });
+
+  socket.on("update roadmap", (updatedRoadmap) => {
+    roadmapText = updatedRoadmap;
+    io.emit("update roadmap", updatedRoadmap);
+  });
+
+  socket.on("update about us", (updatedAboutUs) => {
+    aboutUsText = updatedAboutUs;
+    io.emit("update about us", updatedAboutUs);
+  });
+
+  socket.on("owner login", (isOwner) => {
+    if (isOwner) {
+      socket.emit("owner login", true);
+    }
+  });
+
+  socket.on("disconnect", () => {
+    console.log("A user disconnected");
   });
 });
 
-// Start the server on port 3000
-server.listen(3000, () => {
-  console.log('Server running on http://localhost:3000');
+server.listen(PORT, () => {
+  console.log(`Server is running on port ${PORT}`);
 });
