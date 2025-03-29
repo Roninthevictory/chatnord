@@ -3,196 +3,47 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat App - Chatnord</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>CHATNORD</title>
+  <link rel="stylesheet" href="/public/style.css">
 </head>
 <body>
-  <div class="container">
-    <!-- Navigation Tabs -->
-    <div class="tabs-container">
+  <div class="app-container">
+    <div class="sidebar">
       <div class="tabs">
-        <div class="tab" id="tab-chat">Chat</div>
-        <div class="tab" id="tab-chat2">Chat 2</div>
-        <div class="tab" id="tab-about">About Us</div>
-        <div class="tab" id="tab-new">New</div>
-        <div class="tab" id="tab-roadmap">Roadmap</div>
-        <div class="tab" id="tab-admin">Admin</div>
+        <div id="tab-chat" class="tab active">Chat</div>
+        <div id="tab-chat2" class="tab">Chat 2</div>
+        <div id="tab-about" class="tab">About Us</div>
+        <div id="tab-new" class="tab">New</div>
+        <div id="tab-roadmap" class="tab">Roadmap</div>
+        <div id="tab-admin" class="tab">Admin</div>
       </div>
     </div>
-
-    <!-- Content Sections -->
-    <div class="content-container">
-      <!-- Chat -->
-      <div class="content" id="content-chat">
-        <div class="chat-container">
-          <div class="messages" id="messages"></div>
-          <input type="text" id="username" placeholder="Enter your username" class="input-field" />
-          <input type="text" id="message" placeholder="Type a message" class="input-field" />
-          <button id="send" class="send-button">Send</button>
+    <div class="main-content">
+      <div id="content-chat" class="content active">
+        <div class="message-container" id="messages"></div>
+        <input id="username" type="text" placeholder="Username">
+        <input id="message" type="text" placeholder="Message">
+        <button id="send">Send</button>
+      </div>
+      <!-- Other content sections like Chat 2, About, New, etc. -->
+      <div id="content-admin" class="content">
+        <div id="admin-login">
+          <input type="text" id="admin-username" placeholder="Username">
+          <input type="password" id="admin-password" placeholder="Password">
+          <button id="admin-login">Login</button>
         </div>
-      </div>
-
-      <!-- Chat 2 -->
-      <div class="content" id="content-chat2" style="display: none;">
-        <p>This is Chat 2.</p>
-      </div>
-
-      <!-- About Us -->
-      <div class="content" id="content-about" style="display: none;">
-        <p id="about-text">This is the About Us page.</p>
-      </div>
-
-      <!-- New -->
-      <div class="content" id="content-new" style="display: none;">
-        <div id="new-text">This is the New section.</div>
-      </div>
-
-      <!-- Roadmap -->
-      <div class="content" id="content-roadmap" style="display: none;">
-        <div id="roadmap-text">This is the Roadmap section.</div>
-      </div>
-
-      <!-- Admin Panel -->
-      <div class="content" id="content-admin" style="display: none;">
-        <h2>Login to Admin Panel</h2>
-        <input type="text" id="admin-username" placeholder="Admin Username" class="input-field" />
-        <input type="password" id="admin-password" placeholder="Admin Password" class="input-field" />
-        <button id="admin-login" class="admin-login-button">Login</button>
-        
+        <!-- Admin Panel Actions -->
         <div id="admin-panel" style="display: none;">
-          <h3>Admin Actions</h3>
-          <button id="add-update" class="admin-action-button">Add Update to New</button>
-          <button id="edit-roadmap" class="admin-action-button">Edit Roadmap</button>
-          <button id="edit-about-us" class="admin-action-button">Edit About Us</button>
-          <button id="login-owner" class="admin-action-button">Login as Owner</button>
-        </div>
-        
-        <!-- Admin Actions Forms -->
-        <div id="add-update-form" style="display: none;">
-          <textarea id="new-update-text" class="input-field"></textarea>
-          <button id="submit-update" class="submit-button">Submit Update</button>
-        </div>
-
-        <div id="edit-roadmap-form" style="display: none;">
-          <textarea id="roadmap-edit-text" class="input-field"></textarea>
-          <button id="submit-roadmap" class="submit-button">Submit Roadmap</button>
-        </div>
-
-        <div id="edit-about-us-form" style="display: none;">
-          <textarea id="about-us-edit-text" class="input-field"></textarea>
-          <button id="submit-about-us" class="submit-button">Submit About Us</button>
+          <button id="add-update">Add Update to New</button>
+          <button id="edit-roadmap">Edit Roadmap</button>
+          <button id="edit-about-us">Edit About Us</button>
+          <button id="login-owner">Login as Owner</button>
         </div>
       </div>
     </div>
   </div>
 
   <script src="/socket.io/socket.io.js"></script>
-  <script>
-    const socket = io();
-    const messageInput = document.getElementById("message");
-    const sendButton = document.getElementById("send");
-    const messagesContainer = document.getElementById("messages");
-    const usernameInput = document.getElementById("username");
-
-    const adminLoginButton = document.getElementById("admin-login");
-    const adminUsernameInput = document.getElementById("admin-username");
-    const adminPasswordInput = document.getElementById("admin-password");
-    const adminPanel = document.getElementById("admin-panel");
-    const addUpdateButton = document.getElementById("add-update");
-    const editRoadmapButton = document.getElementById("edit-roadmap");
-    const editAboutUsButton = document.getElementById("edit-about-us");
-    const loginOwnerButton = document.getElementById("login-owner");
-
-    const addUpdateForm = document.getElementById("add-update-form");
-    const submitUpdateButton = document.getElementById("submit-update");
-    const newUpdateText = document.getElementById("new-update-text");
-
-    const editRoadmapForm = document.getElementById("edit-roadmap-form");
-    const submitRoadmapButton = document.getElementById("submit-roadmap");
-    const roadmapEditText = document.getElementById("roadmap-edit-text");
-
-    const editAboutUsForm = document.getElementById("edit-about-us-form");
-    const submitAboutUsButton = document.getElementById("submit-about-us");
-    const aboutUsEditText = document.getElementById("about-us-edit-text");
-
-    // Admin credentials
-    const adminUsername = "Chatnordadmin";
-    const adminPassword = "Chatnord123@!";
-    let isAdmin = false;
-
-    adminLoginButton.addEventListener("click", () => {
-      if (adminUsernameInput.value === adminUsername && adminPasswordInput.value === adminPassword) {
-        isAdmin = true;
-        adminPanel.style.display = "block";
-        adminUsernameInput.value = "";
-        adminPasswordInput.value = "";
-      } else {
-        alert("Invalid Admin credentials");
-      }
-    });
-
-    addUpdateButton.addEventListener("click", () => {
-      addUpdateForm.style.display = "block";
-    });
-
-    submitUpdateButton.addEventListener("click", () => {
-      const newUpdate = newUpdateText.value;
-      if (newUpdate) {
-        document.getElementById("new-text").textContent = newUpdate;
-        addUpdateForm.style.display = "none";
-        socket.emit("new update", newUpdate);
-      }
-    });
-
-    editRoadmapButton.addEventListener("click", () => {
-      editRoadmapForm.style.display = "block";
-      roadmapEditText.value = document.getElementById("roadmap-text").textContent;
-    });
-
-    submitRoadmapButton.addEventListener("click", () => {
-      const updatedRoadmap = roadmapEditText.value;
-      if (updatedRoadmap) {
-        document.getElementById("roadmap-text").textContent = updatedRoadmap;
-        editRoadmapForm.style.display = "none";
-        socket.emit("update roadmap", updatedRoadmap);
-      }
-    });
-
-    editAboutUsButton.addEventListener("click", () => {
-      editAboutUsForm.style.display = "block";
-      aboutUsEditText.value = document.getElementById("about-text").textContent;
-    });
-
-    submitAboutUsButton.addEventListener("click", () => {
-      const updatedAboutUs = aboutUsEditText.value;
-      if (updatedAboutUs) {
-        document.getElementById("about-text").textContent = updatedAboutUs;
-        editAboutUsForm.style.display = "none";
-        socket.emit("update about us", updatedAboutUs);
-      }
-    });
-
-    loginOwnerButton.addEventListener("click", () => {
-      const ownerUsername = prompt("Enter owner username:");
-      const ownerPassword = prompt("Enter owner password:");
-
-      if (ownerUsername === "Ownerchat" && ownerPassword === "Ownerofsite123") {
-        socket.emit("owner login", true);
-        alert("Logged in as owner. Messages will now have [owner] prefix.");
-      } else {
-        alert("Invalid owner credentials");
-      }
-    });
-
-    // Prevent others from using the [owner] prefix
-    socket.on("chat message", (msg, username) => {
-      if (username === "Ownerchat") {
-        msg = `[owner] ${msg}`;
-      }
-      const messageElement = document.createElement("div");
-      messageElement.textContent = `${username}: ${msg}`;
-      messagesContainer.appendChild(messageElement);
-    });
-  </script>
+  <script src="/public/script.js"></script>
 </body>
 </html>
