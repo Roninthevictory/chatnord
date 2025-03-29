@@ -3,76 +3,85 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ChatNord</title>
+  <title>Chat App - Chatnord</title>
   <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <div class="tabs-container">
-    <div class="tabs">
-      <div class="tab" id="tab-chat">Chat</div>
-      <div class="tab" id="tab-chat2">Chat 2</div>
-      <div class="tab" id="tab-about">About Us</div>
-      <div class="tab" id="tab-new">New</div>
-      <div class="tab" id="tab-roadmap">Roadmap</div>
-      <div class="tab" id="tab-admin">Admin</div>
-    </div>
-  </div>
-
-  <div class="content-container">
-    <div class="content" id="content-chat">
-      <div class="chat-container">
-        <div class="messages" id="messages"></div>
-        <input type="text" id="username" placeholder="Enter your username" />
-        <input type="text" id="message" placeholder="Type a message" />
-        <button id="send">Send</button>
+  <div class="container">
+    <!-- Navigation Tabs -->
+    <div class="tabs-container">
+      <div class="tabs">
+        <div class="tab" id="tab-chat">Chat</div>
+        <div class="tab" id="tab-chat2">Chat 2</div>
+        <div class="tab" id="tab-about">About Us</div>
+        <div class="tab" id="tab-new">New</div>
+        <div class="tab" id="tab-roadmap">Roadmap</div>
+        <div class="tab" id="tab-admin">Admin</div>
       </div>
     </div>
 
-    <div class="content" id="content-chat2" style="display: none;">
-      <p>This is Chat 2.</p>
-    </div>
-
-    <div class="content" id="content-about" style="display: none;">
-      <p id="about-text">This is the About Us page.</p>
-    </div>
-
-    <div class="content" id="content-new" style="display: none;">
-      <div id="new-text">This is the New section.</div>
-    </div>
-
-    <div class="content" id="content-roadmap" style="display: none;">
-      <div id="roadmap-text">This is the Roadmap section.</div>
-    </div>
-
-    <!-- Admin Panel -->
-    <div class="content" id="content-admin" style="display: none;">
-      <h2>Login to Admin Panel</h2>
-      <input type="text" id="admin-username" placeholder="Admin Username" />
-      <input type="password" id="admin-password" placeholder="Admin Password" />
-      <button id="admin-login">Login</button>
-      
-      <div id="admin-panel" style="display: none;">
-        <h3>Admin Actions</h3>
-        <button id="add-update">Add Update to New</button>
-        <button id="edit-roadmap">Edit Roadmap</button>
-        <button id="edit-about-us">Edit About Us</button>
-        <button id="login-owner">Login as Owner</button>
-      </div>
-      
-      <!-- Admin Actions Forms -->
-      <div id="add-update-form" style="display: none;">
-        <textarea id="new-update-text"></textarea>
-        <button id="submit-update">Submit Update</button>
+    <!-- Content Sections -->
+    <div class="content-container">
+      <!-- Chat -->
+      <div class="content" id="content-chat">
+        <div class="chat-container">
+          <div class="messages" id="messages"></div>
+          <input type="text" id="username" placeholder="Enter your username" class="input-field" />
+          <input type="text" id="message" placeholder="Type a message" class="input-field" />
+          <button id="send" class="send-button">Send</button>
+        </div>
       </div>
 
-      <div id="edit-roadmap-form" style="display: none;">
-        <textarea id="roadmap-edit-text"></textarea>
-        <button id="submit-roadmap">Submit Roadmap</button>
+      <!-- Chat 2 -->
+      <div class="content" id="content-chat2" style="display: none;">
+        <p>This is Chat 2.</p>
       </div>
 
-      <div id="edit-about-us-form" style="display: none;">
-        <textarea id="about-us-edit-text"></textarea>
-        <button id="submit-about-us">Submit About Us</button>
+      <!-- About Us -->
+      <div class="content" id="content-about" style="display: none;">
+        <p id="about-text">This is the About Us page.</p>
+      </div>
+
+      <!-- New -->
+      <div class="content" id="content-new" style="display: none;">
+        <div id="new-text">This is the New section.</div>
+      </div>
+
+      <!-- Roadmap -->
+      <div class="content" id="content-roadmap" style="display: none;">
+        <div id="roadmap-text">This is the Roadmap section.</div>
+      </div>
+
+      <!-- Admin Panel -->
+      <div class="content" id="content-admin" style="display: none;">
+        <h2>Login to Admin Panel</h2>
+        <input type="text" id="admin-username" placeholder="Admin Username" class="input-field" />
+        <input type="password" id="admin-password" placeholder="Admin Password" class="input-field" />
+        <button id="admin-login" class="admin-login-button">Login</button>
+        
+        <div id="admin-panel" style="display: none;">
+          <h3>Admin Actions</h3>
+          <button id="add-update" class="admin-action-button">Add Update to New</button>
+          <button id="edit-roadmap" class="admin-action-button">Edit Roadmap</button>
+          <button id="edit-about-us" class="admin-action-button">Edit About Us</button>
+          <button id="login-owner" class="admin-action-button">Login as Owner</button>
+        </div>
+        
+        <!-- Admin Actions Forms -->
+        <div id="add-update-form" style="display: none;">
+          <textarea id="new-update-text" class="input-field"></textarea>
+          <button id="submit-update" class="submit-button">Submit Update</button>
+        </div>
+
+        <div id="edit-roadmap-form" style="display: none;">
+          <textarea id="roadmap-edit-text" class="input-field"></textarea>
+          <button id="submit-roadmap" class="submit-button">Submit Roadmap</button>
+        </div>
+
+        <div id="edit-about-us-form" style="display: none;">
+          <textarea id="about-us-edit-text" class="input-field"></textarea>
+          <button id="submit-about-us" class="submit-button">Submit About Us</button>
+        </div>
       </div>
     </div>
   </div>
